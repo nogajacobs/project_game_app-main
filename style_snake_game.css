@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+body {
+    text-align: center;
+}
+
+.btn {
+    cursor: pointer;
+    font-size: 14px;
+    color: #8ec215;
+    border-radius: 4px;
+    padding: 4px 11px;
+    background: #fff;
+    border: 2px solid #8ec215;
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    color: #fff;
+    background: #8ec215;
+}
+
+.home-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+}
