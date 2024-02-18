@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess the Number</title>
+  <link rel="stylesheet" href="style_guess_number.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Guess the Number</h1>
+    <p>Enter a number between 1 and 100:</p>
+    <input type="number" id="guessInput" min="1" max="100" required>
+    <button onclick="checkGuess()">Check</button>
+    <p id="resultMessage"></p>
+    <button onclick="goToHomePage()">Go Home</button> <!-- New button -->
+
+  </div>
+  <script>
+function goToHomePage() {
+    window.location.href = "home.html"; // Change "home.html" to the path of your home page
+}
+
+function checkGuess() {
+    const userGuess = parseInt(document.getElementById('guessInput').value);
+    const randomNumber = Math.floor(Math.random() * 100) + 1; // Generate random number between 1 and 100
+    const resultMessage = document.getElementById('resultMessage');
+  
+    if (userGuess === randomNumber) {
+        resultMessage.textContent = "Congratulations! You guessed the correct number!";
+        setCookie("guess_game_result", "win", 7); // Set cookie for win
+        saveScore(true); // Save the score and update user info
+    } else {
+        resultMessage.textContent = `Sorry, the correct number was ${randomNumber}. Try again!`;
+        setCookie("guess_game_result", "lose", 7); // Set cookie for lose
+        saveScore(false); // Save the score and update user info
+    }
+}
+
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+function saveScore(isWin) {
+    const record = 20 - timeLeft;
+    let users = JSON.parse(localStorage.getItem('users')) || {};
+
+    if (!users[username]) {
+        users[username] = {
+            guessNumberWins: 0,
+            guessNumberLosses: 0,
+            matchedCard: 0,
+            score: 0
+        };
+    }
+
+    if (isWin) {
+        users[username].guessNumberWins++;
+        setCookie("guess_game_result", "win", 7); // Set cookie for win
+    } else {
+        users[username].guessNumberLosses++;
+        setCookie("guess_game_result", "lose", 7); // Set cookie for lose
+    }
+
+    if (users[username].score > record || users[username].matchedCard < matchedCard) {
+        alert("Your last record is " + users[username].matchedCard + " cards, within " + users[username].score + " seconds\n"
+            + "Your new record is " + matchedCard + " cards, within " + record + " seconds");
+        users[username].score = record;
+        users[username].matchedCard = matchedCard;
+    }
+    
+    localStorage.setItem('users', JSON.stringify(users));
+    updateUserInfo();
+}
+
+function updateUserInfo() {
+    const userInfoElement = document.getElementById('userInfo');
+    const usernameElement = document.querySelector('.username');
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+    
+    if (users[username]) {
+        usernameElement.textContent = username;
+
+        // Display win and loss count for Guess the Number game
+        const guessNumberWins = users[username].guessNumberWins || 0;
+        const guessNumberLosses = users[username].guessNumberLosses || 0;
+        userInfoElement.innerHTML = `<p>Guess the Number Wins: ${guessNumberWins}</p>`;
+        userInfoElement.innerHTML += `<p>Guess the Number Losses: ${guessNumberLosses}</p>`;
+    }
+}
+
+
+  </script>
+
+  <style>
+    .container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+input[type="number"] {
+    width: 100px;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+  </style>
+</body>
+</html>

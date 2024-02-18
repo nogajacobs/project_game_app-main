@@ -1,0 +1,105 @@
+/* Reset default browser styles */
+html, body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5;
+  }
+
+  
+  header {
+    background-color: #3b5998;
+    color: #fff;
+    padding: 20px 0;
+  }
+  
+  header h1 {
+    text-align: center;
+  }
+  
+  nav {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  .games {
+    background-color: #fff;
+    padding: 50px 0;
+  }
+  
+  .games h2 {
+    text-align: center;
+    color: #3b5998;
+  }
+  
+  .games ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+  }
+  
+  .games li {
+    margin-top: 20px;
+  }
+  
+  .games a {
+    color: #1877f2;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .games a:hover {
+    color: #166fe5;
+  }
+  
+  .user-info {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 30px;
+  }
+  
+  .user-info h2 {
+    text-align: center;
+    color: #3b5998;
+  }
+  
+  .user-info #userInfo {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 18px;
+  }
+
+  .user-info {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 30px;
+  }
+  
+  .user-info h2 {
+    text-align: center;
+    color: #3b5998;
+  }
+  
+  .user-info #userInfo {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .user-info .username {
+    color: #166fe5;;
+    font-weight: bold;
+  }
+  

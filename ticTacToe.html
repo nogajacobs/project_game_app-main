@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="style_tic_tac_toe.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tic-Tac-Toe</h1>
+        <div class="board">
+            <div class="cell" onclick="handleClick(0)"></div>
+            <div class="cell" onclick="handleClick(1)"></div>
+            <div class="cell" onclick="handleClick(2)"></div>
+            <div class="cell" onclick="handleClick(3)"></div>
+            <div class="cell" onclick="handleClick(4)"></div>
+            <div class="cell" onclick="handleClick(5)"></div>
+            <div class="cell" onclick="handleClick(6)"></div>
+            <div class="cell" onclick="handleClick(7)"></div>
+            <div class="cell" onclick="handleClick(8)"></div>
+        </div>
+        <button onclick="resetGame()">Reset</button>
+        <p id="status"></p>
+    </div>
+
+    <script >
+        let currentPlayer = 'X';
+let board = ['', '', '', '', '', '', '', '', ''];
+const winningCombinations = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+    [0, 4, 8], [2, 4, 6] // Diagonals
+];
+
+function handleClick(index) {
+    if (board[index] === '' && !checkWinner()) {
+        board[index] = currentPlayer;
+        renderBoard();
+
+        if (!checkWinner() && !board.includes('')) {
+            document.getElementById('status').textContent = "It's a draw!";
+        } else if (currentPlayer === 'X') {
+            currentPlayer = 'O';
+            // Simulate computer's move after a short delay
+            setTimeout(computerMove, 500);
+        }
+    }
+}
+
+function computerMove() {
+    let availableCells = board.reduce((acc, curr, index) => {
+        if (curr === '') acc.push(index);
+        return acc;
+    }, []);
+
+    let randomIndex = Math.floor(Math.random() * availableCells.length);
+    let computerIndex = availableCells[randomIndex];
+    board[computerIndex] = 'O';
+    renderBoard();
+
+    if (!checkWinner() && !board.includes('')) {
+        document.getElementById('status').textContent = "It's a draw!";
+    }
+
+    currentPlayer = 'X';
+}
+
+function checkWinner() {
+    for (let i = 0; i < winningCombinations.length; i++) {
+        const [a, b, c] = winningCombinations[i];
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+            document.getElementById('status').textContent = `${board[a]} wins!`;
+            return true;
+        }
+    }
+    return false;
+}
+
+function resetGame() {
+    currentPlayer = 'X';
+    board = ['', '', '', '', '', '', '', '', ''];
+    renderBoard();
+    document.getElementById('status').textContent = '';
+}
+
+function renderBoard() {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach((cell, index) => {
+        cell.textContent = board[index];
+    });
+}
+
+    </script>
+
+    <style>
+        .container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: #ddd;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</body>
+</html>

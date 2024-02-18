@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game App - Home</title>
+  <link rel="stylesheet" href="style_home.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Welcome to the Game App!</h1>
+    </div>
+  </header>
+
+  <section class="games">
+    <div class="container">
+      <h2>Explore Our Games</h2>
+      <ul>
+        <li><a href="memory_game.html">Memory Game</a></li>
+        <li><a href="GuessTheNumber.html">Guess The Number</a></li>
+        <li><a href="MatchthePairs.html">Match the Pairs</a></li>
+        <li>Game 4 (Under Development)</li>
+        <!-- Add more game links as needed -->
+      </ul>
+    </div>
+  </section>
+
+  <section class="user-info">
+    <div class="container">
+      <h2>User Information</h2>
+      <div id="userInfo">
+        Logged in as: <span class="username"></span>
+        <p>Memory Game Wins: <span class="memory-wins">0</span></p>
+        <p>Memory Game Losses: <span class="memory-losses">0</span></p>
+        <p>Guess The Number Wins: <span class="guess-wins">0</span></p>
+        <p>Guess The Number Losses: <span class="guess-losses">0</span></p>
+        <!-- Add more game win/loss information as needed -->
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Read user data from cookies
+    const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+    let username = '';
+  
+    // Extract relevant information from cookies (e.g., username)
+    for (const cookie of cookies) {
+      const [key, value] = cookie.split('=');
+      if (key === 'username') { // Assuming 'username' is the cookie name
+        username = value; // Storing username
+        break;
+      }
+    }
+  
+    // Display username on the page
+    const usernameElement = document.querySelector('.username');
+    if (username) {
+      usernameElement.textContent = username;
+    } else {
+      usernameElement.textContent = 'Not logged in';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      updateUserInfo();
+    });
+
+    function updateUserInfo() {
+      const userInfoElement = document.getElementById('userInfo');
+      const users = JSON.parse(localStorage.getItem('users')) || {};
+      if (users[username]) {
+          const memoryWins = users[username].memoryWins || 0;
+          const memoryLosses = users[username].memoryLosses || 0;
+          const guessWins = users[username].guessWins || 0;
+          const guessLosses = users[username].guessLosses || 0;
+
+          const memoryWinsElement = document.querySelector('.memory-wins');
+          const memoryLossesElement = document.querySelector('.memory-losses');
+          const guessWinsElement = document.querySelector('.guess-wins');
+          const guessLossesElement = document.querySelector('.guess-losses');
+
+          memoryWinsElement.textContent = memoryWins;
+          memoryLossesElement.textContent = memoryLosses;
+          guessWinsElement.textContent = guessWins;
+          guessLossesElement.textContent = guessLosses;
+      }
+    }
+  </script>  
+</body>
+</html>
